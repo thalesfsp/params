@@ -28,12 +28,7 @@ jobs:
 
     - name: Test
       run: |
-        curl -s https://raw.githubusercontent.com/thalesfsp/configurer/main/resources/install.sh | sh
-        make infra-start
-        sleep 5
         make test coverage
-        sleep 5
-        make infra-stop
 
     - name: Integration test
       run: |
