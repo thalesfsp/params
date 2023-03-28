@@ -1,4 +1,9 @@
-package param
+package delete
+
+import (
+	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/vali"
+)
 
 // Delete params.
 //
@@ -15,5 +20,16 @@ type Delete struct {
 //
 // NOTE: This function just for testing purpose.
 func (s *Delete) Process() error {
-	return Validate(s)
+	return vali.Validate(s)
+}
+
+// New creates a new param.
+func New() (*Delete, error) {
+	c := &Delete{}
+
+	if err := shared.Process(c); err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }

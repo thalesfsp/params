@@ -1,6 +1,11 @@
-package param
+package list
 
-import "github.com/thalesfsp/params/customsort"
+import (
+	"github.com/thalesfsp/params/customsort"
+	"github.com/thalesfsp/params/field"
+	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/vali"
+)
 
 // List params.
 //
@@ -10,7 +15,7 @@ type List struct {
 	Count int64 `json:"count" validate:"omitempty,gte=0" default:"0"`
 
 	// Fields to be included in the response.
-	Fields Fields `json:"fields" query:"fields" param:"fields" form:"fields" validate:"omitempty,gt=0"`
+	Fields field.Fields `json:"fields" query:"fields" param:"fields" form:"fields" validate:"omitempty,gt=0"`
 
 	// Limit is the maximum number of items to return.
 	//
@@ -32,5 +37,16 @@ type List struct {
 //
 // NOTE: This function just for testing purpose.
 func (l *List) Process() error {
-	return Validate(l)
+	return vali.Validate(l)
+}
+
+// New creates a new param.
+func New() (*List, error) {
+	c := &List{}
+
+	if err := shared.Process(c); err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }

@@ -1,4 +1,4 @@
-package param
+package vali
 
 import (
 	"github.com/thalesfsp/configurer/util"

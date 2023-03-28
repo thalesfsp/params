@@ -1,4 +1,9 @@
-package param
+package count
+
+import (
+	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/vali"
+)
 
 // Count params.
 //
@@ -12,5 +17,16 @@ type Count struct {
 //
 // NOTE: This function just for testing purpose.
 func (c *Count) Process() error {
-	return Validate(c)
+	return vali.Validate(c)
+}
+
+// New creates a new param.
+func New() (*Count, error) {
+	c := &Count{}
+
+	if err := shared.Process(c); err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }

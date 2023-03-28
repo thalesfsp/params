@@ -29,7 +29,7 @@ func TestSort_String(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.s.String(); got != tt.want {
-				t.Errorf("Sort.String() = %v, want %v", got, tt.want)
+				t.Errorf("Sort.String() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
@@ -82,11 +82,11 @@ func TestSort_ToAnyString(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := tt.s.ToAnyString(tt.args.betweenKVSeparator, tt.args.betweenEntriesSeparator)
 			if got != tt.want {
-				t.Errorf("Sort.ToAnyString() = %v, want %v", got, tt.want)
+				t.Errorf("Sort.ToAnyString() = %+v, want %+v", got, tt.want)
 			}
 
 			if err != nil && !tt.wantErr {
-				t.Errorf("Sort.ToAnyString() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Sort.ToAnyString() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 		})
 	}
@@ -116,11 +116,11 @@ func TestSort_ToMap(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := tt.s.ToMap()
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Sort.ToMap() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Sort.ToMap() error = %+v, wantErr %+v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Sort.ToMap() = %v, want %v", got, tt.want)
+				t.Errorf("Sort.ToMap() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
@@ -157,16 +157,16 @@ func TestSortMap_UnmarshalParam(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := tt.sM.UnmarshalParam(tt.args.src)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("SortMap.UnmarshalParam() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("SortMap.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 
 			if !tt.wantErr {
 				if tt.sM["a"] != Asc {
-					t.Errorf("SortMap.UnmarshalParam() error = %v, wantErr %v", err, tt.wantErr)
+					t.Errorf("SortMap.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
 				}
 
 				if tt.sM["b"] != Desc {
-					t.Errorf("SortMap.UnmarshalParam() error = %v, wantErr %v", err, tt.wantErr)
+					t.Errorf("SortMap.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
 				}
 			}
 		})
@@ -196,7 +196,7 @@ func TestNewFromMap(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := NewFromMap(tt.args.m); got != tt.want {
-				t.Errorf("NewFromMap() = %v, want %v", got, tt.want)
+				t.Errorf("NewFromMap() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
@@ -222,7 +222,7 @@ func TestSort_Validate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.s.IsValid(); got != tt.want {
-				t.Errorf("Sort.Validate() = %v, want %v", got, tt.want)
+				t.Errorf("Sort.Validate() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
@@ -246,7 +246,7 @@ func TestSortMap_ToSort(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.sM.ToSort(); got != tt.want {
-				t.Errorf("SortMap.ToSort() = %v, want %v", got, tt.want)
+				t.Errorf("SortMap.ToSort() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}

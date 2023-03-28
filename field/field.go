@@ -1,10 +1,9 @@
-package param
+package field
 
 import (
-	"encoding/json"
 	"strings"
 
-	"github.com/thalesfsp/customerror"
+	"github.com/thalesfsp/params/internal/shared"
 )
 
 //////
@@ -13,22 +12,6 @@ import (
 
 // Fields to be included in the response.
 type Fields []string
-
-//////
-// Helpers.
-//////
-
-// Marshal with custom error.
-func Marshal(v any) ([]byte, error) {
-	data, err := json.Marshal(&v)
-	if err != nil {
-		return nil, customerror.NewFailedToError("to marshal",
-			customerror.WithError(err),
-		)
-	}
-
-	return data, nil
-}
 
 //////
 // Methods.
@@ -52,7 +35,7 @@ func (f *Fields) UnmarshalParam(src string) error {
 // ToElasticSearch converts the `f` to a format that can be used in an
 // ElasticSearch query: `["field1","field2"]`.
 func (f *Fields) ToElasticSearch() (string, error) {
-	jsonBytes, err := Marshal(f)
+	jsonBytes, err := shared.Marshal(f)
 	if err != nil {
 		return "", err
 	}
