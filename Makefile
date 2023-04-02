@@ -2,7 +2,7 @@
 # Params.
 ###
 
-PROJECT_FULL_NAME := param
+PROJECT_FULL_NAME := params
 
 HAS_GODOC := $(shell command -v godoc;)
 HAS_GOLANGCI := $(shell command -v golangci-lint;)
