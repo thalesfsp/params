@@ -2,7 +2,7 @@ package count
 
 import (
 	"github.com/thalesfsp/params/internal/shared"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // Count params.
@@ -17,7 +17,7 @@ type Count struct {
 //
 // NOTE: This function just for testing purpose.
 func (c *Count) Process() error {
-	return vali.Validate(c)
+	return validation.Validate(c)
 }
 
 // New creates a new param.

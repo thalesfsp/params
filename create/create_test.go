@@ -1,36 +1,27 @@
-package get
+package create
 
 import (
 	"reflect"
 	"testing"
 )
 
-// DocumentID is the document ID.
-const DocumentID = "VFzrpYMBXu5BQSZxo0qX"
-
-func TestGet_Validate(t *testing.T) {
+func TestSet_Validate(t *testing.T) {
 	tests := []struct {
 		name    string
-		g       *Get
+		s       *Set
 		wantErr bool
 	}{
 		{
-			name: "Should work",
-			g: &Get{
-				ID: DocumentID,
-			},
+			name:    "Should work",
+			s:       &Set{},
 			wantErr: false,
-		},
-		{
-			name:    "Should fail - missing ID",
-			g:       &Get{},
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.g.Process(); (err != nil) != tt.wantErr {
-				t.Errorf("Get.Process() error = %+v, wantErr %+v", err, tt.wantErr)
+			s := &Set{}
+			if err := s.Process(); (err != nil) != tt.wantErr {
+				t.Errorf("Set.Process() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 		})
 	}
@@ -39,17 +30,17 @@ func TestGet_Validate(t *testing.T) {
 func TestNew(t *testing.T) {
 	tests := []struct {
 		name              string
-		want              *Get
+		want              *Set
 		wantErr           bool
 		wantValidationErr bool
 	}{
 		{
 			name: "Should work",
-			want: &Get{
+			want: &Set{
 				ID: "",
 			},
 			wantErr:           false,
-			wantValidationErr: true,
+			wantValidationErr: false,
 		},
 	}
 	for _, tt := range tests {
@@ -64,7 +55,7 @@ func TestNew(t *testing.T) {
 			}
 
 			if err := got.Process(); (err != nil) != tt.wantValidationErr {
-				t.Errorf("Get.Process() error = %+v, wantErr %+v", err, tt.wantErr)
+				t.Errorf("Set.Process() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 		})
 	}

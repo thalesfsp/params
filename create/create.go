@@ -1,10 +1,10 @@
-package set
+package create
 
 import (
 	"time"
 
 	"github.com/thalesfsp/params/internal/shared"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // Set params.
@@ -24,7 +24,7 @@ type Set struct {
 //
 // NOTE: This function just for testing purpose.
 func (s *Set) Process() error {
-	return vali.Validate(s)
+	return validation.Validate(s)
 }
 
 // New creates a new param.

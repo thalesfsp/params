@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/thalesfsp/params/internal/shared"
-	validation "github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // Update params.

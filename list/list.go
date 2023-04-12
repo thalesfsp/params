@@ -4,7 +4,7 @@ import (
 	"github.com/thalesfsp/params/customsort"
 	"github.com/thalesfsp/params/field"
 	"github.com/thalesfsp/params/internal/shared"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // List params.
@@ -37,7 +37,7 @@ type List struct {
 //
 // NOTE: This function just for testing purpose.
 func (l *List) Process() error {
-	return vali.Validate(l)
+	return validation.Validate(l)
 }
 
 // New creates a new param.

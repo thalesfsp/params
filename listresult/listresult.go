@@ -2,7 +2,7 @@ package listresult
 
 import (
 	"github.com/thalesfsp/params/list"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // ListResult response params.
@@ -15,5 +15,5 @@ type ListResult[T any] struct {
 //
 // NOTE: This function just for testing purpose.
 func (p *ListResult[T]) Process() error {
-	return vali.Validate(p)
+	return validation.Validate(p)
 }

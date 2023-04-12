@@ -2,7 +2,7 @@ package delete
 
 import (
 	"github.com/thalesfsp/params/internal/shared"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // Delete params.
@@ -20,7 +20,7 @@ type Delete struct {
 //
 // NOTE: This function just for testing purpose.
 func (s *Delete) Process() error {
-	return vali.Validate(s)
+	return validation.Validate(s)
 }
 
 // New creates a new param.

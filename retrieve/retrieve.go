@@ -1,9 +1,9 @@
-package get
+package retrieve
 
 import (
 	"github.com/thalesfsp/params/field"
 	"github.com/thalesfsp/params/internal/shared"
-	"github.com/thalesfsp/params/vali"
+	"github.com/thalesfsp/validation"
 )
 
 // Get params.
@@ -21,7 +21,7 @@ type Get struct {
 //
 // NOTE: This function just for testing purpose.
 func (g *Get) Process() error {
-	return vali.Validate(g)
+	return validation.Validate(g)
 }
 
 // New creates a new param.
