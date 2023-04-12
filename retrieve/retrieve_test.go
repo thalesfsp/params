@@ -11,19 +11,19 @@ const DocumentID = "VFzrpYMBXu5BQSZxo0qX"
 func TestGet_Validate(t *testing.T) {
 	tests := []struct {
 		name    string
-		g       *Get
+		g       *Retrieve
 		wantErr bool
 	}{
 		{
 			name: "Should work",
-			g: &Get{
+			g: &Retrieve{
 				ID: DocumentID,
 			},
 			wantErr: false,
 		},
 		{
 			name:    "Should fail - missing ID",
-			g:       &Get{},
+			g:       &Retrieve{},
 			wantErr: true,
 		},
 	}
@@ -39,13 +39,13 @@ func TestGet_Validate(t *testing.T) {
 func TestNew(t *testing.T) {
 	tests := []struct {
 		name              string
-		want              *Get
+		want              *Retrieve
 		wantErr           bool
 		wantValidationErr bool
 	}{
 		{
 			name: "Should work",
-			want: &Get{
+			want: &Retrieve{
 				ID: "",
 			},
 			wantErr:           false,

@@ -6,10 +6,10 @@ import (
 	"github.com/thalesfsp/validation"
 )
 
-// Get params.
+// Retrieve params.
 //
 // SEE: https://echo.labstack.com/guide/binding/#data-sources on data binding.
-type Get struct {
+type Retrieve struct {
 	// ID of the resource to delete.
 	ID string `json:"id" query:"id" param:"id" form:"id" validate:"required"`
 
@@ -20,13 +20,13 @@ type Get struct {
 // Process the `default` -> `env` -> `validate` struct's fields tags.
 //
 // NOTE: This function just for testing purpose.
-func (g *Get) Process() error {
+func (g *Retrieve) Process() error {
 	return validation.Validate(g)
 }
 
 // New creates a new param.
-func New() (*Get, error) {
-	c := &Get{}
+func New() (*Retrieve, error) {
+	c := &Retrieve{}
 
 	if err := shared.Process(c); err != nil {
 		return nil, err

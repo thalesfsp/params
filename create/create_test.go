@@ -8,18 +8,18 @@ import (
 func TestSet_Validate(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *Set
+		s       *Create
 		wantErr bool
 	}{
 		{
 			name:    "Should work",
-			s:       &Set{},
+			s:       &Create{},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &Set{}
+			s := &Create{}
 			if err := s.Process(); (err != nil) != tt.wantErr {
 				t.Errorf("Set.Process() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
@@ -30,13 +30,13 @@ func TestSet_Validate(t *testing.T) {
 func TestNew(t *testing.T) {
 	tests := []struct {
 		name              string
-		want              *Set
+		want              *Create
 		wantErr           bool
 		wantValidationErr bool
 	}{
 		{
 			name: "Should work",
-			want: &Set{
+			want: &Create{
 				ID: "",
 			},
 			wantErr:           false,
