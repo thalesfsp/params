@@ -21,7 +21,7 @@ func TestSet_Validate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			s := &Create{}
 			if err := s.Process(); (err != nil) != tt.wantErr {
-				t.Errorf("Set.Process() error = %+v, wantErr %+v", err, tt.wantErr)
+				t.Errorf("Create.Process() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 		})
 	}
@@ -55,7 +55,7 @@ func TestNew(t *testing.T) {
 			}
 
 			if err := got.Process(); (err != nil) != tt.wantValidationErr {
-				t.Errorf("Set.Process() error = %+v, wantErr %+v", err, tt.wantErr)
+				t.Errorf("Create.Process() error = %+v, wantErr %+v", err, tt.wantErr)
 			}
 		})
 	}

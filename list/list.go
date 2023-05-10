@@ -29,6 +29,11 @@ type List struct {
 	// Search is the search query.
 	Search string `json:"search" query:"search" param:"search" form:"search" validate:"omitempty,gt=0"`
 
+	// SearchRaw if set is passed right way to the adapter.
+	//
+	// NOTE: NOT all adapters support this feature.
+	SearchRaw string `json:"search_raw" query:"search_raw" param:"search_raw" form:"search_raw" validate:"omitempty,gt=0"`
+
 	// Sort is the sort query.
 	Sort customsort.SortMap `json:"sort" query:"sort" param:"sort" form:"sort" validate:"omitempty,gt=0"`
 }
