@@ -15,6 +15,10 @@ type Retrieve struct {
 
 	// Fields to be included in the response.
 	Fields field.Fields `json:"fields" query:"fields" param:"fields" form:"fields" validate:"omitempty,gt=0"`
+
+	// Any use this for cases where you need to pass something down to the
+	// adapter.
+	Any interface{} `json:"any" query:"any" param:"any" form:"any" validate:"omitempty,gt=0"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.
