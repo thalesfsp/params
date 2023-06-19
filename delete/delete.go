@@ -14,6 +14,9 @@ type Delete struct {
 
 	// Soft delete if specified.
 	Soft bool `json:"soft" query:"soft" param:"soft" form:"soft" default:"false"`
+
+	// Target to delete.
+	Target string `json:"target" query:"target" param:"target" form:"target"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.
