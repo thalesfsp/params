@@ -11,6 +11,10 @@ import (
 //
 // SEE: https://echo.labstack.com/guide/binding/#data-sources on data binding.
 type Create struct {
+	// Any use this for cases where you need to pass something down to the
+	// adapter.
+	Any interface{} `json:"any" query:"any" param:"any" form:"any" validate:"omitempty,gt=0"`
+
 	// ID of the resource.
 	ID string `json:"id,omitempty" query:"id" param:"id" form:"id" validate:"omitempty,gt=0"`
 

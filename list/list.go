@@ -11,6 +11,10 @@ import (
 //
 // SEE: https://echo.labstack.com/guide/binding/#data-sources on data binding.
 type List struct {
+	// Any use this for cases where you need to pass something down to the
+	// adapter.
+	Any interface{} `json:"any" query:"any" param:"any" form:"any" validate:"omitempty,gt=0"`
+
 	// Count is used for response, and it is the total number of items.
 	Count int64 `json:"count" validate:"omitempty,gte=0" default:"0"`
 
@@ -33,10 +37,6 @@ type List struct {
 	//
 	// NOTE: NOT all adapters support this feature.
 	SearchRaw string `json:"search_raw" query:"search_raw" param:"search_raw" form:"search_raw" validate:"omitempty,gt=0"`
-
-	// Any use this for cases where you need to pass something down to the
-	// adapter.
-	Any interface{} `json:"any" query:"any" param:"any" form:"any" validate:"omitempty,gt=0"`
 
 	// Sort is the sort query.
 	Sort customsort.SortMap `json:"sort" query:"sort" param:"sort" form:"sort" validate:"omitempty,gt=0"`
