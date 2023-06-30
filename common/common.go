@@ -27,7 +27,7 @@ type Common struct {
 	ID string `bson:"_id" json:"id,omitempty" id:"uuid" form:"id" param:"id" query:"id" db:"id" dbType:"varchar(255)" validate:"omitempty,gt=0"`
 
 	// Status is the status of the record.
-	Status status.Status `bson:"status" json:"status" form:"status" query:"status" validate:"omitempty,gt=0" default:"active"`
+	Status status.Status `bson:"status" json:"status,omitempty" form:"status" query:"status" validate:"omitempty,gt=0" default:"active"`
 
 	// UpdatedAt is the time the record was updated.
 	UpdatedAt time.Time `bson:"updatedAt" json:"updatedAt,omitempty" form:"updatedAt" query:"updatedAt" validate:"omitempty" default:"now"`
