@@ -7,7 +7,7 @@ import (
 
 // ListResult response params.
 type ListResult[T any] struct {
-	Meta    list.List `json:"meta" validate:"required,dive,required"`
+	Meta    list.List `json:"meta" validate:"required"`
 	Results []T       `json:"results"`
 }
 
