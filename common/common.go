@@ -15,10 +15,10 @@ type Common struct {
 	CreatedBy string `bson:"createdBy" json:"createdBy,omitempty" form:"createdBy" query:"createdBy" validate:"omitempty,gt=0"`
 
 	// DeleteAt is the time the record was deleted.
-	DeleteAt time.Time `bson:"deleteAt" json:"deleteAt,omitempty" form:"deleteAt" query:"deleteAt" validate:"omitempty"`
+	DeleteAt time.Time `bson:"deletedAt" json:"deleteAt,omitempty" form:"deleteAt" query:"deleteAt" validate:"omitempty"`
 
 	// DeleteBy is the user who deleted the record.
-	DeleteBy string `bson:"deleteBy" json:"deleteBy,omitempty" form:"deleteBy" query:"deleteBy" validate:"omitempty,gt=0"`
+	DeleteBy string `bson:"deletedBy" json:"deleteBy,omitempty" form:"deleteBy" query:"deleteBy" validate:"omitempty,gt=0"`
 
 	// ID is the unique identifier for the record.
 	//
