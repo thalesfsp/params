@@ -13,15 +13,15 @@ import (
 type Update struct {
 	// Any use this for cases where you need to pass something down to the
 	// adapter.
-	Any interface{} `json:"any" query:"any" param:"any" form:"any" validate:"omitempty,gt=0"`
+	Any interface{} `form:"any" json:"any" param:"any" query:"any" validate:"omitempty,gt=0"`
 
 	// ID of the resource.
-	ID string `json:"id" query:"id" param:"id" form:"id" validate:"required"`
+	ID string `form:"id" json:"id" param:"id" query:"id" validate:"required"`
 
 	// TTL is the time-to-live.
 	//
 	// NOTE: Not all storage supports that.
-	TTL time.Duration `json:"ttl,omitempty" query:"ttl" param:"ttl" form:"ttl" validate:"omitempty,gt=0"`
+	TTL time.Duration `form:"ttl" json:"ttl,omitempty" param:"ttl" query:"ttl" validate:"omitempty,gt=0"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.

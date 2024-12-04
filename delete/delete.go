@@ -10,13 +10,13 @@ import (
 // SEE: https://echo.labstack.com/guide/binding/#data-sources on data binding.
 type Delete struct {
 	// ID of the resource to delete.
-	ID string `json:"id" query:"id" param:"id" form:"id" validate:"required"`
+	ID string `form:"id" json:"id" param:"id" query:"id" validate:"required"`
 
 	// Soft delete if specified.
-	Soft bool `json:"soft" query:"soft" param:"soft" form:"soft" default:"false"`
+	Soft bool `default:"false" form:"soft" json:"soft" param:"soft" query:"soft"`
 
 	// Target to delete.
-	Target string `json:"target" query:"target" param:"target" form:"target"`
+	Target string `form:"target" json:"target" param:"target" query:"target"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.

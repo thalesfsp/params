@@ -174,6 +174,8 @@ func NewFromMap(m map[string]string) Sort {
 //	NewFromString("name,-age", ",", "", "-")     // name:asc,age:desc
 //	NewFromString("+name,age", ",", "+", "")     // name:asc,age:desc
 //	NewFromString("+name,-age", ",", "+", "-")   // name:asc,age:desc
+//
+//nolint:gocognit,gocritic
 func NewFromString(
 	s,
 	betweenEntriesSeparator string,
@@ -212,16 +214,19 @@ func NewFromString(
 				if entry == "" {
 					return "", customerror.NewInvalidError("sort field cannot be empty")
 				}
+
 				accumulator = append(accumulator, entry+":"+Asc)
 			} else if strings.HasPrefix(entry, descSymbol) {
 				entry = strings.TrimPrefix(entry, descSymbol)
 				if entry == "" {
 					return "", customerror.NewInvalidError("sort field cannot be empty")
 				}
+
 				accumulator = append(accumulator, entry+":"+Desc)
 			} else {
 				return "", customerror.NewInvalidError("sort direction symbol required when both symbols are defined")
 			}
+
 			continue
 		}
 
@@ -232,10 +237,12 @@ func NewFromString(
 				if entry == "" {
 					return "", customerror.NewInvalidError("sort field cannot be empty")
 				}
+
 				accumulator = append(accumulator, entry+":"+Asc)
 			} else {
 				accumulator = append(accumulator, entry+":"+Desc)
 			}
+
 			continue
 		}
 
@@ -245,6 +252,7 @@ func NewFromString(
 			if entry == "" {
 				return "", customerror.NewInvalidError("sort field cannot be empty")
 			}
+
 			accumulator = append(accumulator, entry+":"+Desc)
 		} else {
 			accumulator = append(accumulator, entry+":"+Asc)

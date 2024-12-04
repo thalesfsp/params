@@ -16,6 +16,8 @@ linters:
     - noctx
     - gochecknoglobals
     - predeclared
+    - depguard
+    - nestif
   fast: false
 
 # Settings for specific linters

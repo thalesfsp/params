@@ -49,9 +49,9 @@ func TestProcess(t *testing.T) {
 	t.Setenv("id2", "456")
 
 	type Test struct {
-		ID1 string `json:"id1" default:"123"`
-		ID2 string `json:"id2" env:"id2"`
-		ID3 string `json:"id3" id:"uuid"`
+		ID1 string `default:"123" json:"id1"`
+		ID2 string `env:"id2"     json:"id2"`
+		ID3 string `id:"uuid"     json:"id3"`
 	}
 
 	tests := []struct {

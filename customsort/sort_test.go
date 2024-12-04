@@ -266,7 +266,7 @@ func TestNewFromString(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Should work - explicity",
+			name: "Should work - explicitly",
 			args: args{
 				s:                       "+name,-age",
 				betweenEntriesSeparator: ",",
@@ -277,7 +277,7 @@ func TestNewFromString(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Should work - implicity",
+			name: "Should work - implicitly",
 			args: args{
 				s:                       "name,-age",
 				betweenEntriesSeparator: ",",
@@ -288,7 +288,7 @@ func TestNewFromString(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Should work - implicity",
+			name: "Should work - implicitly",
 			args: args{
 				s:                       "+name,age",
 				betweenEntriesSeparator: ",",
@@ -299,7 +299,7 @@ func TestNewFromString(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Should fail - both implicity",
+			name: "Should fail - both implicitly",
 			args: args{
 				s:                       "+name,-age",
 				betweenEntriesSeparator: ",",
