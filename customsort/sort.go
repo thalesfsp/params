@@ -148,3 +148,109 @@ func NewFromMap(m map[string]string) Sort {
 
 	return Sort(strings.Join(pairs, ","))
 }
+
+// NewFromString creates a new Sort instance from a string representation of sort criteria.
+// It supports flexible sort direction symbols:
+//   - Both ascSymbol and descSymbol can be defined: "+name,-age"
+//   - Only ascSymbol defined: "+name,age" (where age defaults to desc)
+//   - Only descSymbol defined: "name,-age" (where name defaults to asc)
+//   - Neither can be undefined (will return error)
+//
+// Parameters:
+//   - s: The input string containing sort criteria
+//   - betweenEntriesSeparator: Character used to separate multiple sort fields
+//   - ascSymbol: Optional symbol for ascending sort (e.g., "+"). If empty and descSymbol
+//     is defined, ascending is implicit (no prefix)
+//   - descSymbol: Optional symbol for descending sort (e.g., "-"). If empty and ascSymbol
+//     is defined, descending is implicit (no prefix)
+//
+// Returns:
+//   - Sort: A properly formatted Sort instance ("field:asc,field:desc")
+//   - error: Invalid input errors for empty string, empty entries, invalid parts, or when
+//     both symbols are undefined
+//
+// Examples:
+//
+//	NewFromString("name,-age", ",", "", "-")     // name:asc,age:desc
+//	NewFromString("+name,age", ",", "+", "")     // name:asc,age:desc
+//	NewFromString("+name,-age", ",", "+", "-")   // name:asc,age:desc
+func NewFromString(
+	s,
+	betweenEntriesSeparator string,
+	ascSymbol, descSymbol string,
+) (Sort, error) {
+	// Validate that at least one symbol is defined
+	if ascSymbol == "" && descSymbol == "" {
+		return "", customerror.NewInvalidError("at least one of ascSymbol or descSymbol must be defined")
+	}
+
+	// Validate the input string
+	if s == "" {
+		return "", customerror.NewInvalidError("sort string")
+	}
+
+	// Break `s` using the `betweenEntriesSeparator`
+	entries := strings.Split(s, betweenEntriesSeparator)
+
+	// Create an accumulator to store the formatted entries
+	accumulator := make([]string, 0, len(entries))
+
+	// Iterate over the entries
+	for _, entry := range entries {
+		// Trim any whitespace
+		entry = strings.TrimSpace(entry)
+
+		// Validate the entry
+		if entry == "" {
+			return "", customerror.NewInvalidError("sort entry")
+		}
+
+		// Case 1: Both symbols defined
+		if ascSymbol != "" && descSymbol != "" {
+			if strings.HasPrefix(entry, ascSymbol) {
+				entry = strings.TrimPrefix(entry, ascSymbol)
+				if entry == "" {
+					return "", customerror.NewInvalidError("sort field cannot be empty")
+				}
+				accumulator = append(accumulator, entry+":"+Asc)
+			} else if strings.HasPrefix(entry, descSymbol) {
+				entry = strings.TrimPrefix(entry, descSymbol)
+				if entry == "" {
+					return "", customerror.NewInvalidError("sort field cannot be empty")
+				}
+				accumulator = append(accumulator, entry+":"+Desc)
+			} else {
+				return "", customerror.NewInvalidError("sort direction symbol required when both symbols are defined")
+			}
+			continue
+		}
+
+		// Case 2: Only ascSymbol defined
+		if ascSymbol != "" {
+			if strings.HasPrefix(entry, ascSymbol) {
+				entry = strings.TrimPrefix(entry, ascSymbol)
+				if entry == "" {
+					return "", customerror.NewInvalidError("sort field cannot be empty")
+				}
+				accumulator = append(accumulator, entry+":"+Asc)
+			} else {
+				accumulator = append(accumulator, entry+":"+Desc)
+			}
+			continue
+		}
+
+		// Case 3: Only descSymbol defined
+		if strings.HasPrefix(entry, descSymbol) {
+			entry = strings.TrimPrefix(entry, descSymbol)
+			if entry == "" {
+				return "", customerror.NewInvalidError("sort field cannot be empty")
+			}
+			accumulator = append(accumulator, entry+":"+Desc)
+		} else {
+			accumulator = append(accumulator, entry+":"+Asc)
+		}
+	}
+
+	// Join the accumulator using the `,` separator
+	return Sort(strings.Join(accumulator, ",")), nil
+}
