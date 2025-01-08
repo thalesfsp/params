@@ -59,6 +59,16 @@ func TestSort_ToAnyString(t *testing.T) {
 		},
 		{
 			name: "Should work",
+			s:    "comp.a:asc,b:desc",
+			args: args{
+				betweenKVSeparator:      " ",
+				betweenEntriesSeparator: ",",
+			},
+			want:    "comp.a asc,b desc",
+			wantErr: false,
+		},
+		{
+			name: "Should work",
 			s:    "a:asc-b:desc",
 			args: args{
 				betweenKVSeparator:      " ",
@@ -103,6 +113,18 @@ func TestSort_ToMap(t *testing.T) {
 			name:    "Should work",
 			s:       "a:asc,b:desc",
 			want:    map[string]string{"a": Asc, "b": Desc},
+			wantErr: false,
+		},
+		{
+			name:    "Should work",
+			s:       "comp.a:asc,b:desc",
+			want:    map[string]string{"comp.a": Asc, "b": Desc},
+			wantErr: false,
+		},
+		{
+			name:    "Should work",
+			s:       "comp-a:asc,b:desc",
+			want:    map[string]string{"comp-a": Asc, "b": Desc},
 			wantErr: false,
 		},
 		{

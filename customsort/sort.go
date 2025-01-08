@@ -22,7 +22,7 @@ const (
 
 var (
 	// Matches: `key:order,key:order,...`.
-	sortPattern = `[a-zA-Z0-9]+:(asc|desc)`
+	sortPattern = `[a-zA-Z0-9.-]+:(asc|desc)`
 
 	// Compiled means ultra fast :).
 	sortRegex = regexp.MustCompile(sortPattern)
@@ -58,8 +58,8 @@ type Sort string
 
 // match returns the matches of the `sortRegex` in the `s` string. If not found,
 // it returns an error.
-func match(s string) ([]string, error) {
-	matches := sortRegex.FindAllString(s, -1)
+func match(r *regexp.Regexp, s string) ([]string, error) {
+	matches := r.FindAllString(s, -1)
 
 	if len(matches) == 0 {
 		return nil, customerror.NewInvalidError("sort format. Expected: `key:order,key:order`")
@@ -79,7 +79,7 @@ func (s Sort) String() string {
 
 // IsValid checks if the `s` is formatted correctly.
 func (s Sort) IsValid() bool {
-	_, err := match(string(s))
+	_, err := match(sortRegex, string(s))
 
 	return err == nil
 }
@@ -97,19 +97,25 @@ func (s Sort) IsValid() bool {
 // If the function executes successfully, it returns the formatted sort string
 // along with a nil error value.
 func (s Sort) ToAnyString(desiredBetweenKVSeparator, desiredBetweenEntriesSeparator string) (string, error) {
-	matches, err := match(string(s))
+	// First normalize the input by replacing hyphens with commas
+	normalizedStr := strings.ReplaceAll(string(s), "-", ",")
+
+	matches, err := match(sortRegex, normalizedStr)
 	if err != nil {
 		return "", err
 	}
 
-	entries := strings.Join(matches, desiredBetweenEntriesSeparator)
+	formattedMatches := make([]string, len(matches))
+	for i, match := range matches {
+		formattedMatches[i] = strings.ReplaceAll(match, ":", desiredBetweenKVSeparator)
+	}
 
-	return strings.ReplaceAll(entries, ":", desiredBetweenKVSeparator), nil
+	return strings.Join(formattedMatches, desiredBetweenEntriesSeparator), nil
 }
 
 // ToMap converts and validates `s` to a map[fieldName]order.
 func (s Sort) ToMap() (map[string]string, error) {
-	matches, err := match(string(s))
+	matches, err := match(sortRegex, string(s))
 	if err != nil {
 		return nil, customerror.NewFailedToError("match sort pattern", customerror.WithError(err))
 	}
