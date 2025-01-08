@@ -171,9 +171,10 @@ func NewFromMap(m map[string]string) Sort {
 //
 // Examples:
 //
-//	NewFromString("name,-age", ",", "", "-")     // name:asc,age:desc
-//	NewFromString("+name,age", ",", "+", "")     // name:asc,age:desc
-//	NewFromString("+name,-age", ",", "+", "-")   // name:asc,age:desc
+//	NewFromString("name:asc,age:desc", ",", "asc", "desc") // name:asc,age:desc
+//	NewFromString("name,-age", ",", "", "-")               // name:asc,age:desc
+//	NewFromString("+name,age", ",", "+", "")               // name:asc,age:desc
+//	NewFromString("+name,-age", ",", "+", "-")             // name:asc,age:desc
 //
 //nolint:gocognit,gocritic
 func NewFromString(
@@ -207,7 +208,14 @@ func NewFromString(
 			return "", customerror.NewInvalidError("sort entry")
 		}
 
-		// Case 1: Both symbols defined
+		// Case 1: Already in the valid `sortRegex` format.
+		if sortRegex.MatchString(entry) {
+			accumulator = append(accumulator, entry)
+
+			continue
+		}
+
+		// Case 2: Both symbols defined
 		if ascSymbol != "" && descSymbol != "" {
 			if strings.HasPrefix(entry, ascSymbol) {
 				entry = strings.TrimPrefix(entry, ascSymbol)
@@ -230,7 +238,7 @@ func NewFromString(
 			continue
 		}
 
-		// Case 2: Only ascSymbol defined
+		// Case 3: Only ascSymbol defined
 		if ascSymbol != "" {
 			if strings.HasPrefix(entry, ascSymbol) {
 				entry = strings.TrimPrefix(entry, ascSymbol)
@@ -246,7 +254,7 @@ func NewFromString(
 			continue
 		}
 
-		// Case 3: Only descSymbol defined
+		// Case 4: Only descSymbol defined
 		if strings.HasPrefix(entry, descSymbol) {
 			entry = strings.TrimPrefix(entry, descSymbol)
 			if entry == "" {

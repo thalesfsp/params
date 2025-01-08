@@ -277,6 +277,50 @@ func TestNewFromString(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name: "Should work - explicitly - already in format",
+			args: args{
+				s:                       "name:asc,age:desc",
+				betweenEntriesSeparator: ",",
+				ascSymbol:               "asc",
+				descSymbol:              "desc",
+			},
+			want:    "name:asc,age:desc",
+			wantErr: false,
+		},
+		{
+			name: "Should work - explicitly - already in format",
+			args: args{
+				s:                       "name:asc",
+				betweenEntriesSeparator: ",",
+				ascSymbol:               "asc",
+				descSymbol:              "desc",
+			},
+			want:    "name:asc",
+			wantErr: false,
+		},
+		{
+			name: "Should work - explicitly - already in format",
+			args: args{
+				s:                       "age:desc",
+				betweenEntriesSeparator: ",",
+				ascSymbol:               "asc",
+				descSymbol:              "desc",
+			},
+			want:    "age:desc",
+			wantErr: false,
+		},
+		{
+			name: "Should work - explicitly - already in format",
+			args: args{
+				s:                       "age",
+				betweenEntriesSeparator: ",",
+				ascSymbol:               "",
+				descSymbol:              "",
+			},
+			want:    "",
+			wantErr: true,
+		},
+		{
 			name: "Should work - implicitly",
 			args: args{
 				s:                       "name,-age",
