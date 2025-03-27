@@ -30,7 +30,7 @@ type List struct {
 	// result set.
 	Offset int `default:"0" form:"offset" json:"offset" param:"offset" query:"offset" validate:"omitempty,gte=0"`
 
-	// Routing informs the storage adapter to use a specific route to access the
+	// Routing informs the storage adapter to use a specific routes to access the
 	// data.
 	Routing []string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
 
