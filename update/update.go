@@ -18,9 +18,9 @@ type Update struct {
 	// ID of the resource.
 	ID string `form:"id" json:"id" param:"id" query:"id" validate:"required"`
 
-	// Routing informs the storage adapter to use a specific routes to access the
+	// Routing informs the storage adapter to use a specific route to access the
 	// data.
-	Routing []string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
+	Routing string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
 
 	// TTL is the time-to-live.
 	//
