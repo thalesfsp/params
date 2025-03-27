@@ -14,7 +14,7 @@ type Delete struct {
 
 	// Routing informs the storage adapter to use a specific route to access the
 	// data.
-	Routing string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
+	Routing []string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
 
 	// Soft delete if specified.
 	Soft bool `default:"false" form:"soft" json:"soft" param:"soft" query:"soft"`

@@ -32,7 +32,7 @@ type List struct {
 
 	// Routing informs the storage adapter to use a specific route to access the
 	// data.
-	Routing string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
+	Routing []string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
 
 	// Search is the search query.
 	Search string `form:"search" json:"search" param:"search" query:"search" validate:"omitempty,gt=0"`
