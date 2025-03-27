@@ -10,15 +10,19 @@ import (
 //
 // SEE: https://echo.labstack.com/guide/binding/#data-sources on data binding.
 type Retrieve struct {
+	// Any use this for cases where you need to pass something down to the
+	// adapter.
+	Any interface{} `form:"any" json:"any" param:"any" query:"any" validate:"omitempty,gt=0"`
+
 	// ID of the resource to delete.
 	ID string `form:"id" json:"id" param:"id" query:"id" validate:"required"`
 
 	// Fields to be included in the response.
 	Fields field.Fields `form:"fields" json:"fields" param:"fields" query:"fields" validate:"omitempty,gt=0"`
 
-	// Any use this for cases where you need to pass something down to the
-	// adapter.
-	Any interface{} `form:"any" json:"any" param:"any" query:"any" validate:"omitempty,gt=0"`
+	// Routing informs the storage adapter to use a specific route to access the
+	// data.
+	Routing string `form:"routing" json:"routing" param:"routing" query:"routing" validate:"omitempty,gt=0"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.
