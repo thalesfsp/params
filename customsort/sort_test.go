@@ -7,6 +7,8 @@ package customsort
 import (
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSort_String(t *testing.T) {
@@ -146,6 +148,18 @@ func TestSort_ToMap(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestSort_ToSlice(t *testing.T) {
+	var originalSort Sort = "b:desc,a:asc"
+	assert.Equal(t, originalSort.String(), "b:desc,a:asc")
+
+	mS, e := originalSort.ToSlice()
+	assert.NoError(t, e, "ToSlice should not return an error")
+	assert.Equal(t, mS, [][]string{{"b", "desc"}, {"a", "asc"}})
+
+	k := NewFromSlice(mS)
+	assert.Equal(t, k.String(), "b:desc,a:asc")
 }
 
 func TestSortMap_UnmarshalParam(t *testing.T) {

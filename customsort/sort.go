@@ -131,12 +131,30 @@ func (s Sort) ToMap() (map[string]string, error) {
 	return sortMap, nil
 }
 
+// ToSlice converts the `Sort` to a slice of strings. If input is "b:desc,a:asc",
+// the output must be [["b", "desc"], ["a", "asc"]] where the first element is
+// the field name and the second element is the order (asc or desc).
+func (s Sort) ToSlice() ([][]string, error) {
+	matches, err := match(sortRegex, string(s))
+	if err != nil {
+		return nil, customerror.NewFailedToError("match sort pattern", customerror.WithError(err))
+	}
+
+	slice := make([][]string, len(matches))
+
+	for i, pair := range matches {
+		fieldOrder := strings.Split(pair, ":")
+		slice[i] = []string{fieldOrder[0], fieldOrder[1]}
+	}
+
+	return slice, nil
+}
+
 //////
 // Exported functionalities.
 //////
 
-// NewFromMap creates a new `Sort` from a map[fieldName]order. It first sorts
-// the map by the keys, then it joins the pairs using the `,` separator.
+// NewFromMap creates a new `Sort` from a map[fieldName]order.
 func NewFromMap(m map[string]string) Sort {
 	keys := make([]string, 0, len(m))
 
@@ -275,4 +293,19 @@ func NewFromString(
 
 	// Join the accumulator using the `,` separator
 	return Sort(strings.Join(accumulator, ",")), nil
+}
+
+// NewFromSlice creates a new `Sort` from a [["b", "desc"], ["a", "asc"]].
+func NewFromSlice(slice [][]string) Sort {
+	pairs := make([]string, 0, len(slice))
+
+	for _, pair := range slice {
+		if len(pair) != 2 {
+			continue
+		}
+
+		pairs = append(pairs, pair[0]+":"+pair[1])
+	}
+
+	return Sort(strings.Join(pairs, ","))
 }
