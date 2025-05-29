@@ -209,6 +209,53 @@ func TestSortMap_UnmarshalParam(t *testing.T) {
 	}
 }
 
+func TestSortSlice_UnmarshalParam(t *testing.T) {
+	type args struct {
+		src string
+	}
+	tests := []struct {
+		name    string
+		sS      SortSlice
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Should work",
+			sS:   SortSlice{},
+			args: args{
+				src: "a:asc,b:desc",
+			},
+			wantErr: false,
+		},
+		{
+			name: "Should fail",
+			sS:   SortSlice{},
+			args: args{
+				src: "a=asc,b=desc",
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := tt.sS.UnmarshalParam(tt.args.src)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("SortMap.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
+			}
+
+			if !tt.wantErr {
+				if tt.sS[0][0] != "a" || tt.sS[0][1] != Asc {
+					t.Errorf("SortSlice.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
+				}
+
+				if tt.sS[1][0] != "b" || tt.sS[1][1] != Desc {
+					t.Errorf("SortSlice.UnmarshalParam() error = %+v, wantErr %+v", err, tt.wantErr)
+				}
+			}
+		})
+	}
+}
+
 func TestNewFromMap(t *testing.T) {
 	type args struct {
 		m map[string]string
