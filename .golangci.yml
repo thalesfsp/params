@@ -18,6 +18,7 @@ linters:
     - predeclared
     - depguard
     - nestif
+    - mnd
   fast: false
 
 # Settings for specific linters
