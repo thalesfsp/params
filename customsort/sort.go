@@ -317,6 +317,8 @@ func NewFromString(
 }
 
 // NewFromSlice creates a new `Sort` from a [["b", "desc"], ["a", "asc"]].
+//
+//nolint: mnd
 func NewFromSlice(slice [][]string) Sort {
 	pairs := make([]string, 0, len(slice))
 
