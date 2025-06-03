@@ -1,9 +1,9 @@
 package list
 
 import (
-	"github.com/thalesfsp/params/customsort"
-	"github.com/thalesfsp/params/field"
-	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/v2/customsort"
+	"github.com/thalesfsp/params/v2/field"
+	"github.com/thalesfsp/params/v2/internal/shared"
 	"github.com/thalesfsp/validation"
 )
 
@@ -43,7 +43,7 @@ type List struct {
 	SearchRaw string `form:"search_raw" json:"search_raw" param:"search_raw" query:"search_raw" validate:"omitempty,gt=0"`
 
 	// Sort is the sort query.
-	Sort customsort.SortMap `form:"sort" json:"sort" param:"sort" query:"sort" validate:"omitempty,gt=0"`
+	Sort customsort.SortSlice `form:"sort" json:"sort" param:"sort" query:"sort" validate:"omitempty,gt=0"`
 }
 
 // Process the `default` -> `env` -> `validate` struct's fields tags.

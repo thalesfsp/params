@@ -1,8 +1,8 @@
 package retrieve
 
 import (
-	"github.com/thalesfsp/params/field"
-	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/v2/field"
+	"github.com/thalesfsp/params/v2/internal/shared"
 	"github.com/thalesfsp/validation"
 )
 

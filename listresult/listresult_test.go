@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/thalesfsp/params/customsort"
-	"github.com/thalesfsp/params/field"
-	"github.com/thalesfsp/params/list"
+	"github.com/thalesfsp/params/v2/customsort"
+	"github.com/thalesfsp/params/v2/field"
+	"github.com/thalesfsp/params/v2/list"
 )
 
 func TestPagination_Process(t *testing.T) {
@@ -24,10 +24,7 @@ func TestPagination_Process(t *testing.T) {
 					Limit:  20,
 					Offset: 0,
 					Search: "test",
-					Sort: customsort.SortMap{
-						"name": customsort.Asc,
-						"age":  customsort.Desc,
-					},
+					Sort:   [][]string{{"name", customsort.Asc}, {"age", customsort.Desc}},
 				},
 				Results: []string{"foo", "bar", "baz"},
 			},
@@ -42,10 +39,7 @@ func TestPagination_Process(t *testing.T) {
 					Limit:  0,
 					Offset: -1,
 					Search: "",
-					Sort: customsort.SortMap{
-						"name": customsort.Asc,
-						"age":  customsort.Desc,
-					},
+					Sort:   [][]string{{"name", customsort.Asc}, {"age", customsort.Desc}},
 				},
 				Results: []string{},
 			},

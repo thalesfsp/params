@@ -28,48 +28,6 @@ var (
 	sortRegex = regexp.MustCompile(sortPattern)
 )
 
-// SortSlice created to satisfy the Echo's `BindUnmarshaler` interface. Powered by
-// the `Sort` type.
-type SortSlice [][]string
-
-// UnmarshalParam is the `BindUnmarshaler` implementation.
-func (sS *SortSlice) UnmarshalParam(src string) error {
-	s, err := Sort(src).ToSlice()
-	if err != nil {
-		return err
-	}
-
-	*sS = s
-
-	return nil
-}
-
-// ToSort converts a SortSlice to a raw `Sort` type.
-func (sS *SortSlice) ToSort() Sort {
-	return NewFromSlice(*sS)
-}
-
-// SortMap created to satisfy the Echo's `BindUnmarshaler` interface. Powered by
-// the `Sort` type.
-type SortMap map[string]string
-
-// UnmarshalParam is the `BindUnmarshaler` implementation.
-func (sM *SortMap) UnmarshalParam(src string) error {
-	m, err := Sort(src).ToMap()
-	if err != nil {
-		return err
-	}
-
-	*sM = m
-
-	return nil
-}
-
-// ToSort converts a SortMap to a raw `Sort` type.
-func (sM *SortMap) ToSort() Sort {
-	return NewFromMap(*sM)
-}
-
 // Sort is the raw sort from the request.
 type Sort string
 

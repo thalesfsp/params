@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/thalesfsp/params/customsort"
+	"github.com/thalesfsp/params/v2/customsort"
 )
 
 func TestListParams_Validate(t *testing.T) {
@@ -20,10 +20,7 @@ func TestListParams_Validate(t *testing.T) {
 				Limit:  1,
 				Offset: 1,
 				Search: "ab",
-				Sort: customsort.SortMap{
-					"a": customsort.Asc,
-					"b": customsort.Desc,
-				},
+				Sort:   [][]string{{"a", customsort.Asc}, {"b", customsort.Desc}},
 			},
 			wantErr: false,
 		},
@@ -51,9 +48,7 @@ func TestListParams_Validate(t *testing.T) {
 		{
 			name: "Should fail - Sort - invalid order",
 			list: &List{
-				Sort: customsort.SortMap{
-					"a": "asd",
-				},
+				Sort: [][]string{{"a", "asd"}},
 			},
 			wantErr: true,
 		},
@@ -61,7 +56,7 @@ func TestListParams_Validate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.list.Sort == nil {
-				if !customsort.NewFromMap(tt.list.Sort).IsValid() && !tt.wantErr {
+				if !customsort.NewFromSlice(tt.list.Sort).IsValid() && !tt.wantErr {
 					t.Errorf("List.Sort.Validate() = %+v, want %+v", false, tt.wantErr)
 
 					return

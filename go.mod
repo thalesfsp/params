@@ -1,4 +1,4 @@
-module github.com/thalesfsp/params
+module github.com/thalesfsp/params/v2
 
 go 1.23.0
 

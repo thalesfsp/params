@@ -1,7 +1,7 @@
 package delete
 
 import (
-	"github.com/thalesfsp/params/internal/shared"
+	"github.com/thalesfsp/params/v2/internal/shared"
 	"github.com/thalesfsp/validation"
 )
 

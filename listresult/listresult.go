@@ -1,7 +1,7 @@
 package listresult
 
 import (
-	"github.com/thalesfsp/params/list"
+	"github.com/thalesfsp/params/v2/list"
 	"github.com/thalesfsp/validation"
 )
 
