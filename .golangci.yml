@@ -1,124 +1,144 @@
-run:
-  timeout: 1m
-
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
+    - contextcheck
+    - depguard
+    - exhaustruct
+    - gochecknoglobals
     - godox
+    - ireturn
+    - mnd
+    - nestif
+    - noctx
+    - predeclared
+    - tagliatelle
     - varnamelen
     - wrapcheck
-    - exhaustivestruct
-    - exhaustruct
-    - tagliatelle
-    - contextcheck
-    - ireturn
-    - gomnd
-    - noctx
-    - gochecknoglobals
-    - predeclared
-    - depguard
-    - nestif
-    - mnd
-  fast: false
-
-# Settings for specific linters
-linters-settings:
-  funlen:
-    lines: 250
-    statements: 45
-
-  cyclop:
-    skip-tests: true
-    max-complexity: 25
-    package-average: 0
-
-  wsl:
-    allow-separated-leading-comment: true
-
-issues:
-  exclude-rules:
-    - path: cmd/
-      linters:
-        - gochecknoinits
-        - gomnd
-        - forbidigo
-        - exhaustruct
-        - exhaustivestruct
-        - staticcheck
-        - varnamelen
-        - wsl
-        - nestif
-
-    - path: postgres.go
-      linters:
-        - gci
-
-    - path: auth.go
-      linters:
-        - unused
-    - path: example_test.go
-      linters:
-        - lll
-
-    - path: http/
-      linters:
-        - unparam
-        - nlreturn
-
-    - path: mongo*
-      linters:
-        - govet
-
-    - path: test.go
-      linters:
-        - testpackage
-        - cyclop
-
-    - path: _test\.go
-      linters:
-        - funlen
-        - scopelint
-        - wsl
-        - containedctx
-        - nlreturn
-        - gocognit
-        - goerr113
-        - paralleltest
-        - lll
-        - govet
-        - ifshort
-        - maligned
-        - maintidx
-
-    - path: doc.go
-      linters:
-        - lll
-
-    - path: example_test.go
-      linters:
-        - nosnakecase
-
-    - path: resource.go
-      linters:
-        - wsl
-
-    - text: "O_WRONLY|O_RDWR|O_CREATE|O_TRUNC|O_APPEND"
-      linters:
-        - nosnakecase
-
-    - linters:
-        - lll
-      source: "json:"
-
-    - linters:
-        - gocritic
-        - godot
-        - lll
-        - wsl
-      source: "//////"
-
-    - linters:
-        - gocritic
-        - godot
-        - lll
-      source: "//"
+    # Opinionated linters introduced in golangci-lint v2. Identical code was
+    # green under v1.61.0, so these fire only on pre-existing files this PR does
+    # not touch; disabling them keeps the linting intent at parity with v1
+    # rather than weakening it (none existed under v1). Mirrors the decision in
+    # github.com/thalesfsp/configurer. Re-enable as a dedicated PR.
+    #   funcorder   - fights the file's deliberate section-comment layout
+    #   noinlineerr - house style is inline error handling
+    #   recvcheck   - the only fix is a breaking Stringer receiver change
+    - funcorder
+    - noinlineerr
+    - recvcheck
+    # `wsl` is deprecated in v2 (replaced by `wsl_v5`, kept enabled below).
+    - wsl
+  settings:
+    cyclop:
+      max-complexity: 25
+      package-average: 0
+    funlen:
+      lines: 250
+      statements: 45
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - exhaustivestruct
+          - exhaustruct
+          - forbidigo
+          - gochecknoinits
+          - mnd
+          - nestif
+          - staticcheck
+          - varnamelen
+          - wsl
+          - wsl_v5
+        path: cmd/
+      - linters:
+          - unused
+        path: auth.go
+      - linters:
+          - lll
+        path: example_test.go
+      - linters:
+          - nlreturn
+          - unparam
+        path: http/
+      - linters:
+          - govet
+        path: mongo*
+      - linters:
+          - cyclop
+          - testpackage
+        path: test.go
+      - linters:
+          - containedctx
+          - err113
+          - funlen
+          - gocognit
+          - govet
+          - ifshort
+          - lll
+          - maintidx
+          - maligned
+          - nlreturn
+          - paralleltest
+          - scopelint
+          - wsl
+          - wsl_v5
+        path: _test\.go
+      - linters:
+          - lll
+        path: doc.go
+      - linters:
+          - nosnakecase
+        path: example_test.go
+      - linters:
+          - wsl
+          - wsl_v5
+        path: resource.go
+      - linters:
+          - nosnakecase
+        text: O_WRONLY|O_RDWR|O_CREATE|O_TRUNC|O_APPEND
+      - linters:
+          - lll
+        source: 'json:'
+      - linters:
+          - gocritic
+          - godot
+          - lll
+          - wsl
+          - wsl_v5
+        source: //////
+      - linters:
+          - gocritic
+          - godot
+          - lll
+        source: //
+      - linters:
+          - cyclop
+        path: (.+)_test\.go
+      # New revive var-naming behavior in the v2-bundled revive that did not
+      # fire under v1 (identical code was green on v1.61.0). Narrowly restores
+      # v1 parity for package `common`; revive otherwise stays fully enabled.
+      - linters:
+          - revive
+        text: 'avoid meaningless package names'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+      - postgres.go
